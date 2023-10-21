@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+/* global chrome */
+import { useState, useEffect } from 'react';
+import Home from './pages/home';
+import Login from './pages/login';
+import Loading from './pages/loading';
 
 function App() {
+  const [tokenExists, setTokenExists] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(true);
+
+  const getToken = () => {
+    chrome.storage.local.get(['Authorization']).then((result) => {
+      if (result.Authorization) {
+        setTokenExists(true);
+      }
+      setLoadingScreen(false);
+    });
+  };
+
+  useEffect(() => {
+    // chrome.storage.local.clear();
+    setTimeout(() => {
+      getToken();
+    }, 250);
+  }, [tokenExists]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {loadingScreen && <Loading />}
+      {tokenExists ? <Home /> : <Login />}
     </div>
   );
 }
