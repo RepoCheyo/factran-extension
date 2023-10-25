@@ -166,6 +166,7 @@ function Home() {
       XLSX.writeFile(wb, fileName);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       setError('Ups... algo salió mal intenta de nuevo');
     }
   };

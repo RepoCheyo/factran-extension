@@ -17,11 +17,8 @@
     "http://34.228.39.163/*"
   ],
   "permissions": [
-    "scripting",
     "tabs",
-    "nativeMessaging",
     "activeTab",
-    "background",
     "storage"
   ]
 }
