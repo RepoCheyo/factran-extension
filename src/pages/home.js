@@ -109,61 +109,65 @@ function Home() {
   };
 
   const generateXls = (data) => {
-    let dataXlsx = [];
+    try {
+      let dataXlsx = [];
 
-    const rows = [data][0];
-    const mercData = rows.descripcion_mercancias;
+      const rows = [data][0];
+      const mercData = rows.descripcion_mercancias;
 
-    const finalData = mercData.forEach((item) =>
-      dataXlsx.push({
-        FACTURA: rows.numero_factura,
-        ORDEN: mercData.indexOf(item) + 1,
-        PARTE: item.numero_sku,
-        PAIS: item.pais,
-        DESC_FACTURA: item.descripcion_mercancia,
-        DESC_PEDIMENTO: '',
-        CANT_VU: item.cantidad_mercancia,
-        UNIDAD_VU: '',
-        UNI_TARIFA: '',
-        CANT_TARIFA: '',
-        UNI_FACT: item.unidad_medida,
-        CANT_FACT: item.cantidad_mercancia,
-        PRECIO_UNIT_VU: '',
-        PRECIO_UNIT: item.valor_unitario,
-        TOTAL: item.importe_total,
-        FRACCION: '',
-        MET_VAL: '',
-        VINCULACION: '',
-        DESCUENTO: '',
-        MARCA: '',
-        MODELO: '',
-        SERIE: '',
-        ESPECIAL: '',
-        ORDEN_ITEM: '',
-        IMPUESTO: '',
-        FP: '',
-        TASA: '',
-        TT: '',
-        P_I: '',
-        C1: '',
-        C2: '',
-        C3: '',
-        NUM: '',
-        FIRMA: '',
-        NICO: '',
-        SEC_FRACCION: '',
-      })
-    );
+      const finalData = mercData.forEach((item) =>
+        dataXlsx.push({
+          FACTURA: rows.numero_factura,
+          ORDEN: mercData.indexOf(item) + 1,
+          PARTE: item.numero_sku,
+          PAIS: item.pais,
+          DESC_FACTURA: item.descripcion_mercancia,
+          DESC_PEDIMENTO: '',
+          CANT_VU: item.cantidad_mercancia,
+          UNIDAD_VU: '',
+          UNI_TARIFA: '',
+          CANT_TARIFA: '',
+          UNI_FACT: item.unidad_medida,
+          CANT_FACT: item.cantidad_mercancia,
+          PRECIO_UNIT_VU: '',
+          PRECIO_UNIT: item.valor_unitario,
+          TOTAL: item.importe_total,
+          FRACCION: '',
+          MET_VAL: '',
+          VINCULACION: '',
+          DESCUENTO: '',
+          MARCA: '',
+          MODELO: '',
+          SERIE: '',
+          ESPECIAL: '',
+          ORDEN_ITEM: '',
+          IMPUESTO: '',
+          FP: '',
+          TASA: '',
+          TT: '',
+          P_I: '',
+          C1: '',
+          C2: '',
+          C3: '',
+          NUM: '',
+          FIRMA: '',
+          NICO: '',
+          SEC_FRACCION: '',
+        })
+      );
 
-    const fileName = `${rows.numero_factura}Factran.xls`;
+      const fileName = `${rows.numero_factura}Factran.xls`;
 
-    let wb = XLSX.utils.book_new(),
-      ws = XLSX.utils.json_to_sheet(dataXlsx);
+      let wb = XLSX.utils.book_new(),
+        ws = XLSX.utils.json_to_sheet(dataXlsx);
 
-    XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+      XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
 
-    XLSX.writeFile(wb, fileName);
-    setLoading(false);
+      XLSX.writeFile(wb, fileName);
+      setLoading(false);
+    } catch (error) {
+      setError('Ups... algo salió mal intenta de nuevo');
+    }
   };
 
   return (

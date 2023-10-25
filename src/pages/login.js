@@ -11,6 +11,7 @@ function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const login = async () => {
@@ -25,7 +26,8 @@ function Login() {
         .then((response) => {
           const token = response.data.token;
           chrome.storage.local.set({ Authorization: token });
-          //   navigate('/');
+          setLoading(false);
+          setSuccess(true);
         });
     } catch (error) {
       setLoading(false);
@@ -90,6 +92,19 @@ function Login() {
         onClick={login}
         disable={loading ? true : false}
       />
+      {success && (
+        <p
+          style={{
+            fontSize: 10,
+            fontWeight: 500,
+            color: '#2ec4b6',
+            fontWeight: 'bolder',
+            textAlign: 'center',
+          }}
+        >
+          Inicio de sesión existoso, vuelve abrir la extensión
+        </p>
+      )}
       {error && (
         <p
           style={{
