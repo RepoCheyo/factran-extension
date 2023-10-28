@@ -14,7 +14,7 @@
     "128": "./logo.png"
   },
   "host_permissions": [
-    "http://ec2-34-228-39-163.compute-1.amazonaws.com/*"
+    "https://api.factran.tech/*"
   ],
   "permissions": [
     "tabs",
