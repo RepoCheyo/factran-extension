@@ -19,6 +19,7 @@ function Home() {
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
   const [tokenExpired, setTokenExpired] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState('');
 
   const getToken = () => {
     chrome.storage.local.get(['Authorization']).then((result) => {
@@ -42,6 +43,7 @@ function Home() {
   const factranCore = async () => {
     setError('');
     setLoading(true);
+    setLoadingMsg('Extrayendo texto');
     const file = invoiceFile;
     const reader = new FileReader();
 
@@ -80,6 +82,8 @@ function Home() {
 
   const neuralFilter = async (callContent) => {
     try {
+      setLoadingMsg('Filtrando factura');
+
       await instance
         .post(
           '/factran',
@@ -110,6 +114,8 @@ function Home() {
 
   const generateXls = (data) => {
     try {
+      setLoadingMsg('Generando Excel');
+
       let dataXlsx = [];
 
       const rows = [data][0];
@@ -227,8 +233,7 @@ function Home() {
                 textAlign: 'center',
               }}
             >
-              ⓘ Filtrar el archivo puede tomar varios segundos, no cierres la
-              extensión
+              {loadingMsg}
             </p>
           </>
         ) : (
